@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: collect
+  jackson:
+    default-property-inclusion: non_null
+server:
+  port: 8581
+
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    org.hibernate: DEBUG
+    com.sscf: DEBUG
+constants:
+  path: /data/wydDocument/buryPoint.txt
+  pathFolder: /data/wydDocument/
+#  path: C:/Users/lenovo/Desktop/za/wenjian.txt
+#  pathFolder: C:/Users/lenovo/Desktop/za/
