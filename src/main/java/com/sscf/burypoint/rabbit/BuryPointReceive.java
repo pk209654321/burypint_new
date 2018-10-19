@@ -12,9 +12,11 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.sscf.burypoint.constant.ActionLog;
 import com.sscf.burypoint.constant.ConstantInter;
 import com.sscf.burypoint.constant.ConstantsUtil;
 import com.sscf.burypoint.dto.BuryPointDto;
+import com.sscf.burypoint.thread.LogActionThread;
 
 @Component
 public class BuryPointReceive {
@@ -22,9 +24,11 @@ public class BuryPointReceive {
 	// private static final String
 	// POINT_PATH="C:\\Users\\lenovo\\Desktop\\add0.txt";
 	private static final Logger logger = LoggerFactory.getLogger(BuryPointReceive.class);
-
-	@RabbitListener(queues = ConstantInter.QUEUE_BURY_POINT) // 监听器监听指定的Queue
+	private static final Logger logForAction= LoggerFactory.getLogger(ActionLog.class);//打印到特定的文件夹中
+	
+	/*@RabbitListener(queues = ConstantInter.QUEUE_BURY_POINT) // 监听器监听指定的Queue
 	public void processC(BuryPointDto line) {
+		long begin0 = System.currentTimeMillis();
 		logger.debug("-----" + JSON.toJSONString(line));
 		// 将line存放在本地
 		FileOutputStream out = null;
@@ -58,15 +62,44 @@ public class BuryPointReceive {
 		try {
 			outSTr = new FileOutputStream(file, true);
 			Buff = new BufferedOutputStream(outSTr);
-			long begin0 = System.currentTimeMillis();
-			Buff.write((line.getLine() + "," + line.getSendTime()+","+ line.getSource()+ "\n").getBytes());
+			
+			Buff.write((line.getLine() + "," + line.getSendTime()+","+ line.getSource()+","+line.getLogType()+ "\n").getBytes());
 			Buff.flush();
 			Buff.close();
 			long end0 = System.currentTimeMillis();
+			log.debug(JSON.toJSONString(line));
 			logger.debug("BufferedOutputStream执行耗时:" + (end0 - begin0) + " 毫秒");
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error("存储到:" + ConstantsUtil.path + "--失败");
 		}
+	}*/
+	
+	
+	/*@RabbitListener(queues = ConstantInter.QUEUE_BURY_POINT) // 监听器监听指定的Queue
+	public void process(BuryPointDto line) {
+		logger.debug("------------------------------开始打印日志信息");
+		printLog(line);
+	}*/
+	@RabbitListener(queues = ConstantInter.QUEUE_BURY_POINT) // 监听器监听指定的Queue
+	public void processT(BuryPointDto line) {
+		logger.debug("------------------------------开始打印日志信息");
+		for (int i=1;i<=10;i++) {
+			Thread t=new Thread(new LogActionThread(logForAction, logger, line));
+			t.start();
+		}
+	
+	}
+	
+	//打印日志方法
+	public void printLog(BuryPointDto line) {
+		long begin0 = System.currentTimeMillis();
+		try {
+			logForAction.debug(JSON.toJSONString(line));
+		} catch (Exception e) {
+			logger.error("打印日志失败"+e.getMessage());
+		}
+		long end0 = System.currentTimeMillis();
+		logger.debug("BufferedOutputStream执行耗时:" + (end0 - begin0) + " 毫秒");
 	}
 }

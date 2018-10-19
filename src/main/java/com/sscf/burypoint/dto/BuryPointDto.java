@@ -9,7 +9,14 @@ public class BuryPointDto implements Serializable{
 	private String line;
 	private String sendTime;
 	private Integer source;//埋点数据来源1:ios2:安卓3:网页
+	private Integer logType;//日志类型1:用户访问日志,2:用户行为日志
 	
+	public Integer getLogType() {
+		return logType;
+	}
+	public void setLogType(Integer logType) {
+		this.logType = logType;
+	}
 	public Integer getSource() {
 		return source;
 	}

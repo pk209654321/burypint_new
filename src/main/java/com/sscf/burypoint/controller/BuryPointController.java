@@ -35,8 +35,8 @@ public class BuryPointController {
 	@CrossOrigin //跨域
 	public Result postBuryPointInfo(@RequestBody BuryPointDto dto) {
 		//TimeUtil.for
-		if(dto!=null&&StringUtils.isNotEmpty(dto.getLine())&&StringUtils.isNotEmpty(dto.getSendTime())) {
-			logger.debug("接受到的参数dto:"+dto.getLine()+"-----"+dto.getSendTime());
+		if(dto!=null&&StringUtils.isNotEmpty(dto.getLine())&&StringUtils.isNotEmpty(dto.getSendTime())&&dto.getSource()!=null&&dto.getLogType()!=null) {
+			//logger.debug("接受到的参数dto:"+dto.getLine());
 			buryPointSend.sendMsg(dto,ConstantInter.QUEUE_BURY_POINT);
 			return ResultUtil.success();
 		}else {

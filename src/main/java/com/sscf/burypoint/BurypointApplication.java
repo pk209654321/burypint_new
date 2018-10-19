@@ -26,7 +26,7 @@ public class BurypointApplication {
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
         //日期格式化
-        //fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
+        //fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");  
         converter.setFastJsonConfig(fastJsonConfig);
         return new HttpMessageConverters(converter);
     }*/
