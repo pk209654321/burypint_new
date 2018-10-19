@@ -59,7 +59,7 @@ public class BuryPointReceive {
 			outSTr = new FileOutputStream(file, true);
 			Buff = new BufferedOutputStream(outSTr);
 			long begin0 = System.currentTimeMillis();
-			Buff.write((line.getLine() + "," + line.getSendTime() + "\n").getBytes());
+			Buff.write((line.getLine() + "," + line.getSendTime()+","+ line.getSource()+ "\n").getBytes());
 			Buff.flush();
 			Buff.close();
 			long end0 = System.currentTimeMillis();
