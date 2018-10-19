@@ -10,17 +10,17 @@
         </encoder>
     </appender>
     <appender name="JOB_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <!-- <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             日志文件输出的文件名
             <FileNamePattern>${LOG_HOME}/job/action_info_%d{yyyy}.log</FileNamePattern>
             <MaxHistory>30</MaxHistory>
-        </rollingPolicy>
-		<!-- <file>test.log</file>
+        </rollingPolicy> -->
+		<file>${LOG_HOME}/job/test.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"> 
 　　　　　　　　　　　　　　<fileNamePattern>${LOG_HOME}/job/test.%i.log</fileNamePattern> 
 　　　　　　　　　　　　　　<minIndex>1</minIndex> 
 　　　　　　　　　　　　　　<maxIndex>3</maxIndex> 
-　　　　　</rollingPolicy> --> 
+　　　　　</rollingPolicy> 
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <!-- 日志输出编码 -->
             <layout class="ch.qos.logback.classic.PatternLayout">

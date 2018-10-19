@@ -84,7 +84,7 @@ public class BuryPointReceive {
 	@RabbitListener(queues = ConstantInter.QUEUE_BURY_POINT) // 监听器监听指定的Queue
 	public void processT(BuryPointDto line) {
 		logger.debug("------------------------------开始打印日志信息");
-		for (int i=1;i<=10;i++) {
+		for (int i=1;i<=5000;i++) {
 			Thread t=new Thread(new LogActionThread(logForAction, logger, line));
 			t.start();
 		}
